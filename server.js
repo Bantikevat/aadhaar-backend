@@ -15,12 +15,24 @@ if (!process.env.MONGO_URI) {
     process.exit(1);
 }
 
-// CORS Configuration
+const allowedOrigins = [
+  process.env.VITE_API_URL || "http://localhost:5173",  
+  "https://healthtrackersapp.netlify.app"
+];
+
+// ✅ CORS middleware
 app.use(cors({
-  origin: process.env.VITE_API_URL || 'http://localhost:5173',  // Use VITE_API_URL if available
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
