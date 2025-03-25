@@ -29,6 +29,9 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/data", require("./routes/healthData"));
 app.use("/api/reminders", require("./routes/reminders"));
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully! 🚀");
+});
 
 // Start Server Function
 const startServer = async () => {
@@ -41,6 +44,7 @@ const startServer = async () => {
     process.exit(1);
   }
 };
+
 
 // Start the Server
 startServer();
