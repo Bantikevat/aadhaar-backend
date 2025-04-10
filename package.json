@@ -1,4 +1,3 @@
-
 {
   "name": "backend",
   "version": "1.0.0",
@@ -7,7 +6,6 @@
   "scripts": {
     "start": "nodemon server.js",
     "dev": "nodemon server.js"
-
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +15,18 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.12.2",
+    "mongoose": "^8.13.2",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bantikevat/backend.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Bantikevat/backend/issues"
+  },
+  "homepage": "https://github.com/Bantikevat/backend#readme"
 }

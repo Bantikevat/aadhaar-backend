@@ -1,62 +1,21 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
+const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
-// Load environment variables from .env file
 dotenv.config();
-
-// Initialize Express App
 const app = express();
 
-// Ensure that MONGO_URI is defined before connecting
-if (!process.env.MONGO_URI) {
-    console.error("❌ MongoDB URI is missing. Please check your .env file.");
-    process.exit(1);
-}
-
-const allowedOrigins = [
-  process.env.VITE_API_URL || "http://localhost:5173",  
-  "https://healthtrackersapp.netlify.app"
-];
-
-// ✅ CORS middleware
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-
-// Middleware to parse JSON request bodies
+// Middleware
+app.use(cors());
 app.use(express.json());
 
+// Connect to DB
+connectDB();
+
 // Routes
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/data", require("./routes/healthData"));
-app.use("/api/reminders", require("./routes/reminders"));
-app.get("/", (req, res) => {
-  res.send("Backend is running successfully! 🚀");
-});
+app.use("/admin/auth", require("./routes/auth"));
 
-// Start Server Function
-const startServer = async () => {
-  try {
-    await connectDB(); // Ensure MongoDB is connected before starting the server
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-  } catch (error) {
-    console.error("❌ Server startup failed:", error);
-    process.exit(1);
-  }
-};
-
-
-// Start the Server
-startServer();
+// Server start
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
