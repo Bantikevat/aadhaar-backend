@@ -10,7 +10,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: "http://localhost:3000", // ✅ or your frontend live URL
+    origin: ["http://localhost:3000", "https://bypassaadharuclid.com"],
   credentials: true,
 };
 
